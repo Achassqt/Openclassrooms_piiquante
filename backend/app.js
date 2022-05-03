@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const saucesRoutes = require('./routes/sauces');
 const path = require('path');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -14,6 +15,8 @@ mongoose.connect('mongodb+srv://Achas:Sachasou2001!@cluster0.u5gcr.mongodb.net/m
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+app.use(helmet());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
