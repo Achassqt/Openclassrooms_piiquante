@@ -1,7 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const userRoutes = require('./routes/user');
+const saucesRoutes = require('./routes/sauces');
+const path = require('path');
+
 const app = express();
+
+app.use(express.json());
 
 mongoose.connect('mongodb+srv://Achas:Sachasou2001!@cluster0.u5gcr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -9,6 +15,16 @@ mongoose.connect('mongodb+srv://Achas:Sachasou2001!@cluster0.u5gcr.mongodb.net/m
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use('/api/auth', userRoutes);
+app.use('/api/sauces', saucesRoutes);
 
 module.exports = app;
