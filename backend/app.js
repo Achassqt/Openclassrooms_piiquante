@@ -18,6 +18,8 @@ mongoose.connect('mongodb+srv://Achas:Sachasou2001!@cluster0.u5gcr.mongodb.net/m
 
 app.use(helmet());
 
+app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
